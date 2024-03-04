@@ -40,4 +40,4 @@ Start SNORT:
 sudo snort -A console -q -u snort -g snort -c /etc/snort/snort.conf -i <interface>
 ```
 
-Replace '<interface>' with the interface you want to monitor. For example: eth0.
+Replace '<<interface>>' with the interface you want to monitor. For example: eth0.
