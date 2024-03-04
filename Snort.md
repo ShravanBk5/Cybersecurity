@@ -19,7 +19,8 @@ Can Be Installed in Any Network Environment
 
 Rules Are Easy to Implement
 
-# Installation and Configuration of SNORT on Ubuntu Server:
+## Installation and Configuration of SNORT on Ubuntu Server:
 
 To install SNORT on an Ubuntu Server, you can follow these steps:
 
+command_line_1
