@@ -167,14 +167,14 @@ alert tcp any any -> any any (msg:"Possible SQL injection attempt detected"; \
 
 Explanation:
 
-alert tcp any any -> any any: This specifies that the rule applies to TCP traffic from any source IP address and port to any destination IP address and port.
+`alert tcp any any -> any any`: This specifies that the rule applies to TCP traffic from any source IP address and port to any destination IP address and port.
 
-(msg:"Possible SQL injection attempt detected";: This provides a message to be logged when the rule triggers, indicating a possible SQL injection attempt.
+`(msg:"Possible SQL injection attempt detected";`: This provides a message to be logged when the rule triggers, indicating a possible SQL injection attempt.
 
-flow:to_server,established;: This specifies that the rule should only be applied to traffic flowing to the server side of the connection, and the connection must be established.
+`flow:to_server,established;`: This specifies that the rule should only be applied to traffic flowing to the server side of the connection, and the connection must be established.
 
-content:"SELECT"; nocase;: This checks for the case-insensitive occurrence of the string "SELECT" in the packet payload.
+`content`:"SELECT"; nocase;: This checks for the case-insensitive occurrence of the string "SELECT" in the packet payload.
 
-pcre:"/\b(SELECT|UPDATE|DELETE|INSERT)\b/i";: This uses a Perl Compatible Regular Expression (PCRE) to search for SQL keywords (SELECT, UPDATE, DELETE, INSERT) with word boundary \b and case-insensitive /i matching.
+`pcre:"/\b(SELECT|UPDATE|DELETE|INSERT)\b/i";`: This uses a Perl Compatible Regular Expression (PCRE) to search for SQL keywords (SELECT, UPDATE, DELETE, INSERT) with word boundary \b and case-insensitive /i matching.
 
-sid:1000001;: This assigns a unique identifier (SID) to the rule, which can be used for reference and management.
+`sid:1000001;`: This assigns a unique identifier (SID) to the rule, which can be used for reference and management.
