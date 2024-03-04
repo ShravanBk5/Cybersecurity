@@ -34,6 +34,9 @@ sudo apt install snort
 Configure SNORT:
 
 Edit the configuration files in /etc/snort directory as per your requirements.
+```plaintext
+sudo nano /etc/snort/snort.conf
+```
 
 Start SNORT:
 ```plaintext
