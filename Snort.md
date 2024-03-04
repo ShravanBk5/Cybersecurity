@@ -69,7 +69,7 @@ The configuration file for Snort is typically located at /etc/snort/snort.conf .
 
 9) Customize shared object rule set
 
-## Data Acquisition (DAQ)
+### Data Acquisition (DAQ)
 
 The DAQ module is responsible for capturing network packets and passing them to the Snort detection engine for analysis.
 
@@ -116,7 +116,7 @@ config daq_var: <var>
 This line allows you to specify arbitrary variables to be passed to the DAQ module. The <var> parameter should be in the format <name>=<value>. These variables are used to configure specific options or behavior of the selected DAQ module.
 
 
-## Rulesets
+### Rulesets
 
 Customize your rule set
 
