@@ -79,17 +79,17 @@ config daq: <type>
 
 This line specifies the type of DAQ module to use. The <type> parameter can be one of the following:
 
-pcap: Uses the pcap library for packet capture on Unix-based systems.
+`pcap`: Uses the pcap library for packet capture on Unix-based systems.
 
-afpacket: Uses the AF_PACKET interface for packet capture on Linux systems.
+`afpacket`: Uses the AF_PACKET interface for packet capture on Linux systems.
 
-dump: Reads packets from a packet capture file (PCAP format).
+`dump`: Reads packets from a packet capture file (PCAP format).
 
-nfq: Uses the Netfilter Queue (NFQUEUE) interface for packet capture.
+`nfq`: Uses the Netfilter Queue (NFQUEUE) interface for packet capture.
 
-ipq: Uses the old iptables QUEUE interface for packet capture.
+`ipq`: Uses the old iptables QUEUE interface for packet capture.
 
-ipfw: Uses the IPFW firewall interface for packet capture on BSD systems.
+`ipfw`: Uses the IPFW firewall interface for packet capture on BSD systems.
 
 config daq_dir: <dir>
 
@@ -99,11 +99,11 @@ config daq_mode: <mode>
 
 This line specifies the mode of operation for the DAQ module. The <mode> parameter can be one of the following:
 
-read-file: Reads packets from a packet capture file.
+`read-file`: Reads packets from a packet capture file.
 
-passive: Captures packets passively without modifying or interfering with the network traffic.
+`passive`: Captures packets passively without modifying or interfering with the network traffic.
 
-inline: Operates in inline mode, where packets are actively intercepted and processed in real-time.
+`inline`: Operates in inline mode, where packets are actively intercepted and processed in real-time.
 
 config daq_var: <var>
 
