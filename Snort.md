@@ -25,8 +25,19 @@ To install SNORT on an Ubuntu Server, you can follow these steps:
 
 ```plaintext
 sudo apt update
-
+```
 Install SNORT from apt repository
 
 ```plaintext
 sudo apt install snort
+```
+Configure SNORT:
+
+Edit the configuration files in /etc/snort directory as per your requirements.
+
+Start SNORT:
+```plaintext
+sudo snort -A console -q -u snort -g snort -c /etc/snort/snort.conf -i <interface>
+```
+
+Replace <interface> with the interface you want to monitor. For example: eth0.
