@@ -179,9 +179,8 @@ Explanation:
 
 `sid:1000001;`: This assigns a unique identifier (SID) to the rule, which can be used for reference and management.
 
-```plaintext
 Rule application order: pass->drop->sdrop->reject->alert->log
-```
+
 
 `Pass`: Snort checks if the packet matches any pass rules first. If a pass rule is matched, Snort allows the packet to continue without any further processing.
 
