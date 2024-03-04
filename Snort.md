@@ -6,11 +6,17 @@ SNORT is a powerful open-source intrusion detection system (IDS) and intrusion p
 There are various features that make SNORT useful for network admins to monitor their systems and detect malicious activity. These include:
 
 Real-time Traffic Monitor
+
 Packet Logging
+
 Analysis of Protocol
+
 Content Matching
+
 OS Fingerprinting
+
 Can Be Installed in Any Network Environment
+
 Rules Are Easy to Implement
 
 # Installation and Configuration of SNORT on Ubuntu Server:
