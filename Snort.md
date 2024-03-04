@@ -115,3 +115,34 @@ config daq_var: <var>
 
 This line allows you to specify arbitrary variables to be passed to the DAQ module. The <var> parameter should be in the format <name>=<value>. These variables are used to configure specific options or behavior of the selected DAQ module.
 
+
+## Rulesets
+
+Customize your rule set
+
+This section includes a local.rules file located in the $RULE_PATH directory. These are custom rules created by the user to address specific needs or threats in their environment.
+
+site specific rules
+
+include $RULE_PATH/local.rules
+
+The include directives specify additional rule files to be included in the rule set. 
+
+include $RULE_PATH/app-detect.rules
+
+include $RULE_PATH/attack-responses.rules
+
+include $RULE_PATH/backdoor.rules
+
+include $RULE_PATH/bad-traffic.rules
+
+include $RULE_PATH/blacklist.rules
+
+include $RULE_PATH/botnet-cnc.rules
+
+include $RULE_PATH/browser-chrome.rules
+
+include $RULE_PATH/browser-firefox.rules
+
+...
+
