@@ -146,3 +146,10 @@ include $RULE_PATH/browser-firefox.rules
 
 ...
 
+Example of a rule to generate alert on possible SQL injection attempt.
+```plaintext
+alert tcp any any -> any any (msg:"Possible SQL injection attempt detected"; \
+    flow:to_server,established; content:"SELECT"; nocase; \
+    pcre:"/\b(SELECT|UPDATE|DELETE|INSERT)\b/i"; \
+    sid:1000001;)
+```
