@@ -23,4 +23,5 @@ Rules Are Easy to Implement
 
 To install SNORT on an Ubuntu Server, you can follow these steps:
 
-command_line_1
+```plaintext
+Copy this
