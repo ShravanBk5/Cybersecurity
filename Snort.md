@@ -79,17 +79,23 @@ config daq: <type>
 
 This line specifies the type of DAQ module to use. The <type> parameter can be one of the following:
 
-`pcap`: Uses the pcap library for packet capture on Unix-based systems.
+`pcap`: Uses the pcap library for packet capture on Unix-based systems. It supports passive mode, where Snort monitors network traffic without interfering with it. However, pcap does not support inline mode. 
 
-`afpacket`: Uses the AF_PACKET interface for packet capture on Linux systems.
+`afpacket`: Uses the AF_PACKET interface for packet capture on Linux systems. afpacket supports both passive and inline modes. In passive mode, Snort captures network traffic without altering it, while in inline mode, Snort actively inspects and modifies network traffic in real-time.
 
-`dump`: Reads packets from a packet capture file (PCAP format).
+`dump`: Reads packets from a packet capture file (PCAP format). It does not support passive or inline modes since it operates on pre-captured packet data from a file.
 
-`nfq`: Uses the Netfilter Queue (NFQUEUE) interface for packet capture.
+`nfq`: Uses the Netfilter Queue (NFQUEUE) interface for packet capture. 
 
 `ipq`: Uses the old iptables QUEUE interface for packet capture.
 
 `ipfw`: Uses the IPFW firewall interface for packet capture on BSD systems.
+
+
+
+Passive mode: In this mode, Snort captures packets passively without interfering with the network traffic. It operates in a non-intrusive manner, observing the network traffic without actively blocking or modifying it. Passive mode is typically used for monitoring and analysis purposes, where the goal is to observe network activity without affecting its flow.
+
+Inline mode: In contrast, inline mode involves actively intercepting and processing packets in real-time. Snort operates as an inline intrusion prevention system (IPS), where it can inspect, block, or modify network traffic as it passes through the network interface. Inline mode is used for actively enforcing security policies, such as blocking malicious traffic or preventing attacks in real-time.
 
 config daq_dir: <dir>
 
