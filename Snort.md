@@ -26,7 +26,7 @@ To install SNORT on an Ubuntu Server, you can follow these steps:
 ```plaintext
 sudo apt update
 ```
-Install SNORT from apt repository
+Install SNORT from apt repository:
 
 ```plaintext
 sudo apt install snort
