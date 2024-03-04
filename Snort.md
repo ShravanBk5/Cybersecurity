@@ -80,20 +80,31 @@ config daq: <type>
 This line specifies the type of DAQ module to use. The <type> parameter can be one of the following:
 
 pcap: Uses the pcap library for packet capture on Unix-based systems.
+
 afpacket: Uses the AF_PACKET interface for packet capture on Linux systems.
+
 dump: Reads packets from a packet capture file (PCAP format).
+
 nfq: Uses the Netfilter Queue (NFQUEUE) interface for packet capture.
+
 ipq: Uses the old iptables QUEUE interface for packet capture.
+
 ipfw: Uses the IPFW firewall interface for packet capture on BSD systems.
+
 config daq_dir: <dir>
 
 This line specifies the directory where Snort should look for the DAQ module shared objects (.so files). The <dir> parameter is the path to the directory containing the DAQ modules.
+
 config daq_mode: <mode>
 
 This line specifies the mode of operation for the DAQ module. The <mode> parameter can be one of the following:
+
 read-file: Reads packets from a packet capture file.
+
 passive: Captures packets passively without modifying or interfering with the network traffic.
+
 inline: Operates in inline mode, where packets are actively intercepted and processed in real-time.
+
 config daq_var: <var>
 
 This line allows you to specify arbitrary variables to be passed to the DAQ module. The <var> parameter should be in the format <name>=<value>. These variables are used to configure specific options or behavior of the selected DAQ module.
