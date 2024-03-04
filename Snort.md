@@ -69,13 +69,24 @@ The configuration file for Snort is typically located at /etc/snort/snort.conf .
 
 9) Customize shared object rule set
 
+### Network Variables
+
+Setting the network variables in SNORT involves defining specific parameters that determine the range of network traffic monitored and analyzed by the Snort detection engine. These variables, configured in the SNORT configuration file (snort.conf), include:
+
+`HOME_NET`: Represents the network or IP range considered the "internal" or trusted network. Snort monitors traffic originating from or destined to IP addresses within this range.
+
+`EXTERNAL_NET`: Represents the network or IP range considered the "external" or untrusted network. Snort monitors traffic originating from or destined to IP addresses outside this range.
+
+These network variables are essential for Snort to accurately identify and analyze network traffic, enabling it to distinguish between internal and external sources and destinations. By configuring these variables appropriately, Snort can effectively detect and respond to potential threats and intrusions within the monitored network environment.
+
+
 ### Data Acquisition (DAQ)
 
 The DAQ module is responsible for capturing network packets and passing them to the Snort detection engine for analysis.
 
 Let's see each line and its components:
 
-config daq: <type>
+`config daq: <type>`
 
 This line specifies the type of DAQ module to use. The <type> parameter can be one of the following:
 
@@ -93,15 +104,15 @@ This line specifies the type of DAQ module to use. The <type> parameter can be o
 
 
 
-Passive mode: In this mode, Snort captures packets passively without interfering with the network traffic. It operates in a non-intrusive manner, observing the network traffic without actively blocking or modifying it. Passive mode is typically used for monitoring and analysis purposes, where the goal is to observe network activity without affecting its flow.
+`Passive mode`: In this mode, Snort captures packets passively without interfering with the network traffic. It operates in a non-intrusive manner, observing the network traffic without actively blocking or modifying it. Passive mode is typically used for monitoring and analysis purposes, where the goal is to observe network activity without affecting its flow.
 
-Inline mode: In contrast, inline mode involves actively intercepting and processing packets in real-time. Snort operates as an inline intrusion prevention system (IPS), where it can inspect, block, or modify network traffic as it passes through the network interface. Inline mode is used for actively enforcing security policies, such as blocking malicious traffic or preventing attacks in real-time.
+`Inline mode`: In contrast, inline mode involves actively intercepting and processing packets in real-time. Snort operates as an inline intrusion prevention system (IPS), where it can inspect, block, or modify network traffic as it passes through the network interface. Inline mode is used for actively enforcing security policies, such as blocking malicious traffic or preventing attacks in real-time.
 
-config daq_dir: <dir>
+`config daq_dir: <dir>`
 
 This line specifies the directory where Snort should look for the DAQ module shared objects (.so files). The <dir> parameter is the path to the directory containing the DAQ modules.
 
-config daq_mode: <mode>
+`config daq_mode: <mode>`
 
 This line specifies the mode of operation for the DAQ module. The <mode> parameter can be one of the following:
 
@@ -111,7 +122,7 @@ This line specifies the mode of operation for the DAQ module. The <mode> paramet
 
 `inline`: Operates in inline mode, where packets are actively intercepted and processed in real-time.
 
-config daq_var: <var>
+`config daq_var: <var>`
 
 This line allows you to specify arbitrary variables to be passed to the DAQ module. The <var> parameter should be in the format <name>=<value>. These variables are used to configure specific options or behavior of the selected DAQ module.
 
