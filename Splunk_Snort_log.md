@@ -15,3 +15,11 @@ Machine Learning and AI: Splunk incorporates machine learning and artificial int
 Security and Compliance: Splunk offers robust security features to help organizations detect and respond to security threats, monitor compliance with regulatory requirements, and investigate security incidents. It provides security analytics, threat intelligence integration, and advanced security monitoring capabilities.
 
 Deployment Flexibility: Splunk can be deployed in various environments, including on-premises, in the cloud, or in hybrid environments. It supports flexible deployment options and scales to meet the needs of organizations of all sizes.
+
+## Objective
+
+For my project, I plan to configure both Splunk and Snort. Afterwards, I will forward Snort logs to Splunk for analysis, leveraging Splunk's log aggregation and data normalization capabilities. This setup is used to learn about one of the capabilities of fully functional SIEM.
+
+## Network Diagram
+
+![Diagram](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/831c8af8-539b-4657-a58a-1b880ed024bb)
