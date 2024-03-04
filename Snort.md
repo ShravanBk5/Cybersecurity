@@ -173,8 +173,22 @@ Explanation:
 
 `flow:to_server,established;`: This specifies that the rule should only be applied to traffic flowing to the server side of the connection, and the connection must be established.
 
-`content`:"SELECT"; nocase;: This checks for the case-insensitive occurrence of the string "SELECT" in the packet payload.
+`content:"SELECT"`; nocase;: This checks for the case-insensitive occurrence of the string "SELECT" in the packet payload.
 
 `pcre:"/\b(SELECT|UPDATE|DELETE|INSERT)\b/i";`: This uses a Perl Compatible Regular Expression (PCRE) to search for SQL keywords (SELECT, UPDATE, DELETE, INSERT) with word boundary \b and case-insensitive /i matching.
 
 `sid:1000001;`: This assigns a unique identifier (SID) to the rule, which can be used for reference and management.
+
+Rule application order: pass->drop->sdrop->reject->alert->log
+
+`Pass`: Snort checks if the packet matches any pass rules first. If a pass rule is matched, Snort allows the packet to continue without any further processing.
+
+`Drop`: If no pass rules are matched, Snort checks if the packet matches any drop rules. If a drop rule is matched, Snort drops the packet and does not process it any further.
+
+`Sdrop (Stream Drop)`: Stream drop rules are similar to drop rules but are specifically used for stream processing. If a sdrop rule is matched, Snort drops the packet but continues processing subsequent packets in the same stream.
+
+`Reject`: If no pass or drop rules are matched, Snort checks if the packet matches any reject rules. If a reject rule is matched, Snort sends a TCP reset (RST) packet to the sender, effectively rejecting the packet.
+
+`Alert`: If no pass, drop, sdrop, or reject rules are matched, Snort checks if the packet matches any alert rules. If an alert rule is matched, Snort generates an alert and logs information about the packet.
+
+`Log`: Finally, if no pass, drop, sdrop, reject, or alert rules are matched, Snort checks if the packet matches any log rules. If a log rule is matched, Snort logs information about the packet but does not generate an alert.
