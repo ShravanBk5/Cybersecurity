@@ -24,4 +24,9 @@ Rules Are Easy to Implement
 To install SNORT on an Ubuntu Server, you can follow these steps:
 
 ```plaintext
-Copy this
+sudo apt update
+
+Install SNORT from apt repository
+
+```plaintext
+sudo apt install snort
