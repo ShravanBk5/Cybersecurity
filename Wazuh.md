@@ -76,6 +76,63 @@ The Wazuh WUI provides a powerful user interface for data visualization and anal
 ![app7](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/fa7bfb73-83d0-45a2-9507-983a5f7e3384)
 
 
-
+## Network Diagram for my setup
 
 ![Wazuh diagram](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/f5e70cb0-272f-48d5-83c9-37b6a18ac1d3)
+
+## Installation
+
+**VM** : 2 instances. One with Ubuntu Server and other with Ubuntu.
+
+Installing Wazuh
+----------------
+
+Download and run the Wazuh installation assistant.
+
+    curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+
+Once the assistant finishes the installation, the output shows the access credentials and a message that confirms that the installation was successful.
+
+        INFO: --- Summary ---
+        INFO: You can access the web interface https://<wazuh-dashboard-ip>
+            User: admin
+            Password: <ADMIN_PASSWORD>
+        INFO: Installation finished.
+  
+You now have installed and configured Wazuh.
+
+Access the Wazuh web interface with ``https://<wazuh-dashboard-ip>`` and your credentials:
+
+  Username: admin
+  Password: <ADMIN_PASSWORD>
+
+
+## Deploying Wazuh agents on Linux endpoints
+
+The agent runs on the host you want to monitor and communicates with the Wazuh server, sending data in near real-time through an encrypted and authenticated channel.
+
+The deployment of a Wazuh agent on a Linux system uses deployment variables that facilitate the task of installing, registering, and configuring the agent.
+
+Add the Wazuh repository to download the official packages. Then deploy a Wazuh agent
+
+1. Install the GPG key:
+
+        curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+   
+2. Add the repository:
+
+        echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
+
+3. Update the package information:
+
+        curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+
+4. Deploy a Wazuh agent. To deploy the Wazuh agent on your endpoint, select your package manager and edit the WAZUH_MANAGER variable to contain your Wazuh manager IP address or hostname.
+
+        WAZUH_MANAGER="<WAZUH MANAGER IP>" apt-get install wazuh-agent
+
+5. Enable and start the Wazuh agent service.
+
+        systemctl daemon-reload
+        systemctl enable wazuh-agent
+        systemctl start wazuh-agent
