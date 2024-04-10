@@ -154,8 +154,8 @@ Any time the FIM module runs a scan, it triggers alerts if it finds modified fil
 Following, you can see how to configure the FIM module to monitor a file and directory. Replace ``FILEPATH/OF/MONITORED/FILE`` and ``FILEPATH/OF/MONITORED/DIRECTORY`` with your own filepaths. 
 
 ### Add the following settings to the Wazuh agent configuration file, replacing the directories values with your own filepaths:
-   
-       /var/ossec/etc/ossec.conf
+  
+``/var/ossec/etc/ossec.conf``
    
          <syscheck>
             <directories>FILEPATH/OF/MONITORED/FILE</directories>
@@ -165,4 +165,31 @@ Following, you can see how to configure the FIM module to monitor a file and dir
 ### Restart the Wazuh agent with administrator privilege to apply any configuration change:
         
         systemctl restart wazuh-agent
+
+### VirusTotal integration
+
+Wazuh detects malicious files through an integration with VirusTotal, a powerful platform aggregating multiple antivirus products and an online scanning engine. Combining this tool with our FIM module provides an effective way of inspecting monitored files for malicious content.
+
+VirusTotal is an online service that analyzes files and URLs to detect viruses, worms, trojans, and other malicious content using antivirus engines and website scanners.
+
+Public API
+
+This method uses a free API with many of VirusTotal's functionalities. However, it has some significant limitations, such as Request rate limitations and low priority access for requests done by this API to the VirusTotal engine.
+
+Sign up to VirusTotal to get access to Public API key.
+
+Below is an example of settings you must add to the ``/var/ossec/etc/ossec.conf`` file on the Wazuh server:
+
+    <integration>
+      <name>virustotal</name>
+      <api_key>API_KEY</api_key> <!-- Replace with your VirusTotal API key -->
+      <group>syscheck</group>
+      <alert_format>json</alert_format>
+    </integration>
+
+Add the following to the <syscheck> section of the configuration file. You can configure these options in the Wazuh server and the Wazuh agent /var/ossec/etc/ossec.conf file.
+
+     <syscheck>
+       <directories check_all="yes" realtime="yes">FILEPATH/OF/MONITORED/DIRECTORY</directories>
+     </syscheck>
 
