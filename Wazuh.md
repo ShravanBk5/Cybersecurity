@@ -195,6 +195,8 @@ Add the following to the <syscheck> section of the configuration file. You can c
 
 You can try to download a malicious file, for example, ``https://secure.eicar.org/eicar.com`` while monitoring the download folder to see Virustotal integration in action.
 
+Warning: Download the Eicar file here for testing purposes only. Recommended to be tested in a sandbox, not in a production environment.
+
 The file should be automatically deleted and logged.
 
 ![screencapture-192-168-29-39-app-wazuh-2024-04-10-21_52_20](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/20372adf-7fdb-4024-9ddf-e7c0852f3e9d)
