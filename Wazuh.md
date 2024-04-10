@@ -136,3 +136,33 @@ Add the Wazuh repository to download the official packages. Then deploy a Wazuh 
         systemctl daemon-reload
         systemctl enable wazuh-agent
         systemctl start wazuh-agent
+
+## Monitoring Agents
+
+**File integrity monitoring**
+
+The File Integrity Monitoring(FIM) module runs periodic scans on specific paths and monitors specific directories for changes in real time. You can set which paths to monitor in the configuration of the Wazuh agents and manager.
+
+FIM stores the files checksums and other attributes in a local FIM database. Upon a scan, the Wazuh agent reports any changes the FIM module finds in the monitored paths to the Wazuh server.
+
+![fim-flow1](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/2dcfc03e-26d2-4cb2-bb87-fbeded75cda5)
+
+**Configure the FIM module**
+
+Any time the FIM module runs a scan, it triggers alerts if it finds modified files and depending on the changed file attributes. You can view these alerts in the Wazuh dashboard.
+
+Following, you can see how to configure the FIM module to monitor a file and directory. Replace ``FILEPATH/OF/MONITORED/FILE`` and ``FILEPATH/OF/MONITORED/DIRECTORY`` with your own filepaths. 
+
+### Add the following settings to the Wazuh agent configuration file, replacing the directories values with your own filepaths:
+   
+       /var/ossec/etc/ossec.conf
+   
+         <syscheck>
+            <directories>FILEPATH/OF/MONITORED/FILE</directories>
+            <directories>FILEPATH/OF/MONITORED/DIRECTORY</directories>
+         </syscheck>
+
+### Restart the Wazuh agent with administrator privilege to apply any configuration change:
+        
+        systemctl restart wazuh-agent
+
