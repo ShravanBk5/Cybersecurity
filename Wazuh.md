@@ -139,7 +139,7 @@ Add the Wazuh repository to download the official packages. Then deploy a Wazuh 
 
 ## Monitoring Agents
 
-**File integrity monitoring**
+### File integrity monitoring
 
 The File Integrity Monitoring(FIM) module runs periodic scans on specific paths and monitors specific directories for changes in real time. You can set which paths to monitor in the configuration of the Wazuh agents and manager.
 
@@ -147,7 +147,7 @@ FIM stores the files checksums and other attributes in a local FIM database. Upo
 
 ![fim-flow1](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/2dcfc03e-26d2-4cb2-bb87-fbeded75cda5)
 
-**Configure the FIM module**
+### Configure the FIM module
 
 Any time the FIM module runs a scan, it triggers alerts if it finds modified files and depending on the changed file attributes. You can view these alerts in the Wazuh dashboard.
 
