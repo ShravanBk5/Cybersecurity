@@ -187,9 +187,18 @@ Below is an example of settings you must add to the ``/var/ossec/etc/ossec.conf`
       <alert_format>json</alert_format>
     </integration>
 
-Add the following to the <syscheck> section of the configuration file. You can configure these options in the Wazuh server and the Wazuh agent /var/ossec/etc/ossec.conf file.
+Add the following to the <syscheck> section of the configuration file. You can configure these options in the Wazuh server and the Wazuh agent ``/var/ossec/etc/ossec.conf`` file.
 
      <syscheck>
        <directories check_all="yes" realtime="yes">FILEPATH/OF/MONITORED/DIRECTORY</directories>
      </syscheck>
 
+You can try to download a malicious file, for example, ``https://secure.eicar.org/eicar.com`` while monitoring the download folder to see Virustotal integration in action.
+
+The file should be automatically deleted and logged.
+
+![screencapture-192-168-29-39-app-wazuh-2024-04-10-21_52_20](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/20372adf-7fdb-4024-9ddf-e7c0852f3e9d)
+
+Here,
+
+![screencapture-192-168-29-39-app-wazuh-2024-04-10-21_52_20 2](https://github.com/ShravanBk5/Cybersecurity/assets/68052087/8ab387aa-c1aa-4757-99f1-e8aade5cea25)
