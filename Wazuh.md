@@ -87,7 +87,7 @@ The Wazuh WUI provides a powerful user interface for data visualization and anal
 Installing Wazuh
 ----------------
 
-Download and run the Wazuh installation assistant.
+Download and run the Wazuh installation assistant. Ex: ver 4.7
 
     curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
 
