@@ -127,3 +127,219 @@ This home lab simulates a real enterprise SOC environment with:
 
 ### 1. VirtualBox NAT Network
 ```bash
+# Create NAT Network in VirtualBox
+# File → Tools → Network Manager → NAT Networks
+# Name: LabNet
+# CIDR: 10.0.0.0/24
+# Enable DHCP: Yes
+```
+
+### 2. Wazuh Server Setup
+```bash
+# Install Wazuh all-in-one
+curl -sO https://packages.wazuh.com/4.14/wazuh-install.sh
+sudo bash wazuh-install.sh -a -o
+
+# Pin Wazuh packages to prevent auto upgrade
+sudo apt-mark hold wazuh-manager
+sudo apt-mark hold wazuh-indexer
+sudo apt-mark hold wazuh-dashboard
+
+# Access dashboard
+# https://10.0.0.4
+```
+
+### 3. Windows AD Setup
+```powershell
+# Install AD DS Role via Server Manager
+# Add Roles and Features → Active Directory Domain Services
+
+# Promote to Domain Controller
+# New forest → lab.local
+
+# Create test users
+New-ADUser -Name "Test User" `
+  -SamAccountName "testuser" `
+  -UserPrincipalName "testuser@lab.local" `
+  -AccountPassword (ConvertTo-SecureString "Password123!" -AsPlainText -Force) `
+  -Enabled $true `
+  -PasswordNeverExpires $true
+
+New-ADUser -Name "Test User2" `
+  -SamAccountName "testuser2" `
+  -UserPrincipalName "testuser2@lab.local" `
+  -AccountPassword (ConvertTo-SecureString "Password123!" -AsPlainText -Force) `
+  -Enabled $true `
+  -PasswordNeverExpires $true
+
+New-ADUser -Name "Test User3" `
+  -SamAccountName "testuser3" `
+  -UserPrincipalName "testuser3@lab.local" `
+  -AccountPassword (ConvertTo-SecureString "Password123!" -AsPlainText -Force) `
+  -Enabled $true `
+  -PasswordNeverExpires $true
+
+# Create LinuxAdmins group
+New-ADGroup -Name "LinuxAdmins" `
+  -GroupScope Global `
+  -GroupCategory Security
+
+# Add Administrator to LinuxAdmins
+Add-ADGroupMember -Identity "LinuxAdmins" -Members "Administrator"
+```
+
+### 4. Ubuntu Client Domain Join
+```bash
+# Set DNS to WinAD
+sudo nano /etc/resolv.conf
+# Add: nameserver 10.0.0.20
+
+# Make DNS permanent
+sudo nano /etc/systemd/resolved.conf
+# DNS=10.0.0.20
+# FallbackDNS=8.8.8.8
+# Domains=lab.local
+sudo systemctl restart systemd-resolved
+
+# Install required packages
+sudo apt update
+sudo apt install realmd sssd sssd-tools adcli krb5-user \
+  samba-common samba-common-bin packagekit -y
+
+# Configure Kerberos
+sudo nano /etc/krb5.conf
+# default_realm = LAB.LOCAL
+
+# Discover domain
+realm discover lab.local
+
+# Join domain
+sudo realm join lab.local -U Administrator@LAB.LOCAL
+
+# Allow domain users
+sudo realm permit --all
+
+# Enable home directory auto creation
+sudo pam-auth-update --enable mkhomedir
+
+# Give LinuxAdmins group sudo access
+sudo nano /etc/sudoers.d/domain-admins
+# Add: %LinuxAdmins@lab.local ALL=(ALL) ALL
+```
+
+### 5. Wazuh Agent Installation (Linux)
+```bash
+# Add Wazuh repository
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | \
+  sudo gpg --dearmor -o /usr/share/keyrings/wazuh.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] \
+  https://packages.wazuh.com/4.x/apt/ stable main" | \
+  sudo tee /etc/apt/sources.list.d/wazuh.list
+
+sudo apt update
+
+# Install agent
+sudo WAZUH_MANAGER="10.0.0.4" apt install wazuh-agent -y
+
+# Start agent
+sudo systemctl daemon-reload
+sudo systemctl enable wazuh-agent
+sudo systemctl start wazuh-agent
+
+# Pin agent version
+sudo apt-mark hold wazuh-agent
+```
+
+### 6. Wazuh Agent Installation (Windows)
+```powershell
+# Download and install agent
+msiexec.exe /i wazuh-agent-4.14.4-1.msi /q `
+  WAZUH_MANAGER="10.0.0.4" `
+  WAZUH_AGENT_NAME="WinAD"
+
+# Start agent service
+NET START WazuhSvc
+```
+
+---
+
+## 📊 Wazuh Monitoring
+
+### What is Monitored
+
+| VM | Monitored Events |
+|---|---|
+| UbuntuServer | System logs, auth logs, file integrity |
+| WinAD | AD logins, user changes, group changes, policy changes |
+| UbunClient | SSH logins, domain auth, sudo usage, file integrity |
+
+### Alert Levels
+
+| Level | Severity | Example |
+|---|---|---|
+| 1-3 | Low | Informational events |
+| 4-6 | Medium | Failed login attempts |
+| 7-10 | High | Multiple failures, suspicious activity |
+| 11-15 | Critical | Active attacks, rootkits |
+
+### MITRE ATT&CK Coverage
+
+| Technique | ID | Detected By |
+|---|---|---|
+| Password Guessing | T1110.001 | SSH brute force alerts |
+| Valid Accounts | T1078 | Domain login monitoring |
+| Lateral Movement via SSH | T1021.004 | SSH login alerts |
+
+---
+
+## 🔒 Security Testing
+
+### Test 1 — SSH Brute Force
+```bash
+# Generate failed SSH logins
+ssh wronguser@localhost
+# Check Wazuh dashboard for T1110.001 alert
+```
+
+### Test 2 — Domain Login Monitoring
+```bash
+# Login as testuser
+su - testuser@lab.local
+# Check Wazuh for domain authentication event
+```
+
+### Test 3 — Privilege Escalation Attempt
+```bash
+# Login as testuser and try sudo
+su - testuser@lab.local
+sudo apt update
+# Wazuh should alert on unauthorized sudo attempt
+```
+
+---
+
+## 📸 Screenshots
+
+> Add screenshots here after completing setup
+
+- [ ] VirtualBox VM list
+- [ ] NAT Network configuration
+- [ ] Wazuh Dashboard overview
+- [ ] Active agents in Wazuh
+- [ ] Sample security alert
+- [ ] MITRE ATT&CK mapping
+- [ ] AD Users and Computers
+- [ ] UbunClient domain join
+- [ ] testuser login
+
+---
+
+## 📝 Lessons Learned
+
+- Always pin Wazuh packages after install to prevent unintended upgrades
+- Use NAT Network (not regular NAT) for VM-to-VM communication
+- Use fully qualified username `Administrator@LAB.LOCAL` for domain joins
+- Always take VirtualBox snapshots before major changes
+- Ubuntu Server is better than Desktop for Wazuh agent (less RAM)
+- ext4 partitions support online resizing with growpart + resize2fs
